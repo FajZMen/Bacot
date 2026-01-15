@@ -36,15 +36,55 @@
                         <button class="turn-on" id="turnon-pc3">Turn On</button>
                         <button class="shutdown" id="shutdown-pc3" disabled>Shutdown</button>
                     </div>
+                    <div class="pc-item">
+                        <span class="pc-icon">💻</span> PC 4 <span class="pc-status" id="status-pc4">OFF</span>
+                        <button class="turn-on" id="turnon-pc4">Turn On</button>
+                        <button class="shutdown" id="shutdown-pc4" disabled>Shutdown</button>
+                    </div>
+                    <div class="pc-item">
+                        <span class="pc-icon">💻</span> PC 5 <span class="pc-status" id="status-pc5">OFF</span>
+                        <button class="turn-on" id="turnon-pc5">Turn On</button>
+                        <button class="shutdown" id="shutdown-pc5" disabled>Shutdown</button>
+                    </div>
+                    <div class="pc-item">
+                        <span class="pc-icon">💻</span> PC 6 <span class="pc-status" id="status-pc6">OFF</span>
+                        <button class="turn-on" id="turnon-pc6">Turn On</button>
+                        <button class="shutdown" id="shutdown-pc6" disabled>Shutdown</button>
+                    </div>
+                    <div class="pc-item">
+                        <span class="pc-icon">💻</span> PC 7 <span class="pc-status" id="status-pc7">OFF</span>
+                        <button class="turn-on" id="turnon-pc7">Turn On</button>
+                        <button class="shutdown" id="shutdown-pc7" disabled>Shutdown</button>
+                    </div>
                 </div>
             </div>
             <div class="switchsection" id="switchsection" style="display: none;">
                 <h2>Switch Management</h2>
                 <div class="switch-control">
                     <div class="switch-item">
-                        <span class="switch-icon">🔌</span> Main Switch (2960) <span class="switch-status" id="switch-status">OFF</span>
-                        <button class="turn-on" id="turnon-switch">Turn On</button>
-                        <button class="shutdown" id="shutdown-switch" disabled>Shutdown</button>
+                        <span class="switch-icon">🔌</span> Switch 1 <span class="switch-status" id="switch-status1">OFF</span>
+                        <button class="turn-on" id="turnon-switch1">Turn On</button>
+                        <button class="shutdown" id="shutdown-switch1" disabled>Shutdown</button>
+                    </div>
+                    <div class="switch-item">
+                        <span class="switch-icon">🔌</span> Switch 2 <span class="switch-status" id="switch-status2">OFF</span>
+                        <button class="turn-on" id="turnon-switch2">Turn On</button>
+                        <button class="shutdown" id="shutdown-switch2" disabled>Shutdown</button>
+                    </div>
+                    <div class="switch-item">
+                        <span class="switch-icon">🔌</span> Switch 3 <span class="switch-status" id="switch-status3">OFF</span>
+                        <button class="turn-on" id="turnon-switch3">Turn On</button>
+                        <button class="shutdown" id="shutdown-switch3" disabled>Shutdown</button>
+                    </div>
+                    <div class="switch-item">
+                        <span class="switch-icon">🔌</span> Switch 4 <span class="switch-status" id="switch-status4">OFF</span>
+                        <button class="turn-on" id="turnon-switch4">Turn On</button>
+                        <button class="shutdown" id="shutdown-switch4" disabled>Shutdown</button>
+                    </div>
+                    <div class="switch-item">
+                        <span class="switch-icon">🔌</span> Switch 5 <span class="switch-status" id="switch-status5">OFF</span>
+                        <button class="turn-on" id="turnon-switch5">Turn On</button>
+                        <button class="shutdown" id="shutdown-switch5" disabled>Shutdown</button>
                     </div>
                 </div>
             </div>
@@ -197,12 +237,36 @@
         const switchsection = document.getElementById('switchsection');
 
         // Initialize PC statuses from localStorage or default to OFF
-        let pcStatuses = JSON.parse(localStorage.getItem('pcStatuses')) || ['OFF', 'OFF', 'OFF'];
+        let pcStatuses = JSON.parse(localStorage.getItem('pcStatuses')) || ['OFF', 'OFF', 'OFF', 'OFF', 'OFF', 'OFF', 'OFF'];
 
         // Update display based on stored statuses
-        const statusElements = [document.getElementById('status-pc1'), document.getElementById('status-pc2'), document.getElementById('status-pc3')];
-        const turnonButtons = [document.getElementById('turnon-pc1'), document.getElementById('turnon-pc2'), document.getElementById('turnon-pc3')];
-        const shutdownButtons = [document.getElementById('shutdown-pc1'), document.getElementById('shutdown-pc2'), document.getElementById('shutdown-pc3')];
+        const statusElements = [
+            document.getElementById('status-pc1'),
+            document.getElementById('status-pc2'),
+            document.getElementById('status-pc3'),
+            document.getElementById('status-pc4'),
+            document.getElementById('status-pc5'),
+            document.getElementById('status-pc6'),
+            document.getElementById('status-pc7')
+        ];
+        const turnonButtons = [
+            document.getElementById('turnon-pc1'),
+            document.getElementById('turnon-pc2'),
+            document.getElementById('turnon-pc3'),
+            document.getElementById('turnon-pc4'),
+            document.getElementById('turnon-pc5'),
+            document.getElementById('turnon-pc6'),
+            document.getElementById('turnon-pc7')
+        ];
+        const shutdownButtons = [
+            document.getElementById('shutdown-pc1'),
+            document.getElementById('shutdown-pc2'),
+            document.getElementById('shutdown-pc3'),
+            document.getElementById('shutdown-pc4'),
+            document.getElementById('shutdown-pc5'),
+            document.getElementById('shutdown-pc6'),
+            document.getElementById('shutdown-pc7')
+        ];
 
         function updateDisplay(index) {
             const status = pcStatuses[index];
@@ -271,40 +335,157 @@
             updateDisplay(2);
         });
 
+        turnonButtons[3].addEventListener('click', () => {
+            pcStatuses[3] = 'ON';
+            localStorage.setItem('pcStatuses', JSON.stringify(pcStatuses));
+            updateDisplay(3);
+        });
+
+        shutdownButtons[3].addEventListener('click', () => {
+            pcStatuses[3] = 'OFF';
+            localStorage.setItem('pcStatuses', JSON.stringify(pcStatuses));
+            updateDisplay(3);
+        });
+
+        turnonButtons[4].addEventListener('click', () => {
+            pcStatuses[4] = 'ON';
+            localStorage.setItem('pcStatuses', JSON.stringify(pcStatuses));
+            updateDisplay(4);
+        });
+
+        shutdownButtons[4].addEventListener('click', () => {
+            pcStatuses[4] = 'OFF';
+            localStorage.setItem('pcStatuses', JSON.stringify(pcStatuses));
+            updateDisplay(4);
+        });
+
+        turnonButtons[5].addEventListener('click', () => {
+            pcStatuses[5] = 'ON';
+            localStorage.setItem('pcStatuses', JSON.stringify(pcStatuses));
+            updateDisplay(5);
+        });
+
+        shutdownButtons[5].addEventListener('click', () => {
+            pcStatuses[5] = 'OFF';
+            localStorage.setItem('pcStatuses', JSON.stringify(pcStatuses));
+            updateDisplay(5);
+        });
+
+        turnonButtons[6].addEventListener('click', () => {
+            pcStatuses[6] = 'ON';
+            localStorage.setItem('pcStatuses', JSON.stringify(pcStatuses));
+            updateDisplay(6);
+        });
+
+        shutdownButtons[6].addEventListener('click', () => {
+            pcStatuses[6] = 'OFF';
+            localStorage.setItem('pcStatuses', JSON.stringify(pcStatuses));
+            updateDisplay(6);
+        });
+
         // Switch Management Functionality
-        const switchStatus = document.getElementById('switch-status');
-        const turnonSwitchBtn = document.getElementById('turnon-switch');
-        const shutdownSwitchBtn = document.getElementById('shutdown-switch');
+        // Initialize switch statuses from localStorage or default to OFF
+        let switchStatuses = JSON.parse(localStorage.getItem('switchStatuses')) || ['OFF', 'OFF', 'OFF', 'OFF', 'OFF'];
 
-        // Initialize switch status from localStorage or default to OFF
-        let switchStatusValue = localStorage.getItem('switchStatus') || 'OFF';
+        // Update display based on stored statuses
+        const switchStatusElements = [
+            document.getElementById('switch-status1'),
+            document.getElementById('switch-status2'),
+            document.getElementById('switch-status3'),
+            document.getElementById('switch-status4'),
+            document.getElementById('switch-status5')
+        ];
+        const turnonSwitchButtons = [
+            document.getElementById('turnon-switch1'),
+            document.getElementById('turnon-switch2'),
+            document.getElementById('turnon-switch3'),
+            document.getElementById('turnon-switch4'),
+            document.getElementById('turnon-switch5')
+        ];
+        const shutdownSwitchButtons = [
+            document.getElementById('shutdown-switch1'),
+            document.getElementById('shutdown-switch2'),
+            document.getElementById('shutdown-switch3'),
+            document.getElementById('shutdown-switch4'),
+            document.getElementById('shutdown-switch5')
+        ];
 
-        function updateSwitchDisplay() {
-            switchStatus.textContent = switchStatusValue;
-            if (switchStatusValue === 'ON') {
-                switchStatus.classList.add('on');
-                turnonSwitchBtn.disabled = true;
-                shutdownSwitchBtn.disabled = false;
+        function updateSwitchDisplay(index) {
+            const status = switchStatuses[index];
+            switchStatusElements[index].textContent = status;
+            if (status === 'ON') {
+                switchStatusElements[index].classList.add('on');
+                turnonSwitchButtons[index].disabled = true;
+                shutdownSwitchButtons[index].disabled = false;
             } else {
-                switchStatus.classList.remove('on');
-                turnonSwitchBtn.disabled = false;
-                shutdownSwitchBtn.disabled = true;
+                switchStatusElements[index].classList.remove('on');
+                turnonSwitchButtons[index].disabled = false;
+                shutdownSwitchButtons[index].disabled = true;
             }
         }
 
         // Initialize switch display
-        updateSwitchDisplay();
+        switchStatuses.forEach((status, index) => updateSwitchDisplay(index));
 
-        turnonSwitchBtn.addEventListener('click', () => {
-            switchStatusValue = 'ON';
-            localStorage.setItem('switchStatus', switchStatusValue);
-            updateSwitchDisplay();
+        // Event listeners for switches
+        turnonSwitchButtons[0].addEventListener('click', () => {
+            switchStatuses[0] = 'ON';
+            localStorage.setItem('switchStatuses', JSON.stringify(switchStatuses));
+            updateSwitchDisplay(0);
         });
 
-        shutdownSwitchBtn.addEventListener('click', () => {
-            switchStatusValue = 'OFF';
-            localStorage.setItem('switchStatus', switchStatusValue);
-            updateSwitchDisplay();
+        shutdownSwitchButtons[0].addEventListener('click', () => {
+            switchStatuses[0] = 'OFF';
+            localStorage.setItem('switchStatuses', JSON.stringify(switchStatuses));
+            updateSwitchDisplay(0);
+        });
+
+        turnonSwitchButtons[1].addEventListener('click', () => {
+            switchStatuses[1] = 'ON';
+            localStorage.setItem('switchStatuses', JSON.stringify(switchStatuses));
+            updateSwitchDisplay(1);
+        });
+
+        shutdownSwitchButtons[1].addEventListener('click', () => {
+            switchStatuses[1] = 'OFF';
+            localStorage.setItem('switchStatuses', JSON.stringify(switchStatuses));
+            updateSwitchDisplay(1);
+        });
+
+        turnonSwitchButtons[2].addEventListener('click', () => {
+            switchStatuses[2] = 'ON';
+            localStorage.setItem('switchStatuses', JSON.stringify(switchStatuses));
+            updateSwitchDisplay(2);
+        });
+
+        shutdownSwitchButtons[2].addEventListener('click', () => {
+            switchStatuses[2] = 'OFF';
+            localStorage.setItem('switchStatuses', JSON.stringify(switchStatuses));
+            updateSwitchDisplay(2);
+        });
+
+        turnonSwitchButtons[3].addEventListener('click', () => {
+            switchStatuses[3] = 'ON';
+            localStorage.setItem('switchStatuses', JSON.stringify(switchStatuses));
+            updateSwitchDisplay(3);
+        });
+
+        shutdownSwitchButtons[3].addEventListener('click', () => {
+            switchStatuses[3] = 'OFF';
+            localStorage.setItem('switchStatuses', JSON.stringify(switchStatuses));
+            updateSwitchDisplay(3);
+        });
+
+        turnonSwitchButtons[4].addEventListener('click', () => {
+            switchStatuses[4] = 'ON';
+            localStorage.setItem('switchStatuses', JSON.stringify(switchStatuses));
+            updateSwitchDisplay(4);
+        });
+
+        shutdownSwitchButtons[4].addEventListener('click', () => {
+            switchStatuses[4] = 'OFF';
+            localStorage.setItem('switchStatuses', JSON.stringify(switchStatuses));
+            updateSwitchDisplay(4);
         });
     </script>
 </body>
