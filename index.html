@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+
+<html>
+<body>
+    <div class="div1">
+        <h1>Login</h1>
+        <label>User</label><br>
+        <input id="cid" type="text" placeholder="User"></input><br><br>
+        <label>Password</label><br>
+        <input id="cpass" type="password" placeholder="NIM"></input><br><br>
+        <button type="button" onclick="LoginCisco()">Login</button><br><br>
+        <button type="button" onclick="window.location.href='Dashboard.html'">Developer Access</button>
+        <script>
+            async function LoginCisco() {
+                var userid = document.getElementById("cid")
+                var userpass = document.getElementById("cpass")
+                if (userid.value === "Fajar" && userpass.value === "15240266" || userid.value === "Apip" && userpass.value === "15240526" || userid.value === "Kholis" && userpass.value === "15240570" || userid.value === "Ammar" && userpass.value === "15240528" || userid.value === "Tubagus" && userpass.value === "15240529") {
+                    alert("Login Berhasil");
+                    window.location.href = "Dashboard.html";
+                } else {
+                    alert("Login Gagal");
+                }
+            }
+        </script>
+        <style>
+            body {
+                background-color: lightgrey;
+            }
+
+            .div1 {
+                background-color: lightblue;
+                width: 250px;
+                border: 15px solid blue;
+                border-radius: 15px;
+                padding: 50px;
+                margin: auto;
+            } 
+
+            .div1 input {
+                width: 200px;
+                height: 25px;
+                border-radius: 10px;
+            }
+
+            .div1 button {
+                width: 100px;
+                height: 30px;
+                border-radius: 10px;
+                background-color: blue;
+                color: white;
+            }
+        </style>
+    </div>
+</body>
+</html>

@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+
+<html>
+<head> 
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Manager</title>
+</head>
+<body class="lbody">
+    <div class="parent">
+        <div class="div1">
+            <h3>Manager</h3>
+            <ul class="sidebar-list">
+                <li><button id="pcman" class="active">PC</button></li>
+                <li><button id="switman">Switch</button></li>
+            </ul>
+            <button class="logout" onclick="window.location.href='Dashboard.html'">Back to Menu</button>
+        </div>
+
+        <div class="div2">
+            <div class="pcsection" id="pcsection">
+                <h2>PC Management</h2>
+                <div class="pc-list">
+                    <div class="pc-item">
+                        <span class="pc-icon">💻</span> PC 1 <span class="pc-status" id="status-pc1">OFF</span>
+                        <button class="turn-on" id="turnon-pc1">Turn On</button>
+                        <button class="shutdown" id="shutdown-pc1" disabled>Shutdown</button>
+                    </div>
+                    <div class="pc-item">
+                        <span class="pc-icon">💻</span> PC 2 <span class="pc-status" id="status-pc2">OFF</span>
+                        <button class="turn-on" id="turnon-pc2">Turn On</button>
+                        <button class="shutdown" id="shutdown-pc2" disabled>Shutdown</button>
+                    </div>
+                    <div class="pc-item">
+                        <span class="pc-icon">💻</span> PC 3 <span class="pc-status" id="status-pc3">OFF</span>
+                        <button class="turn-on" id="turnon-pc3">Turn On</button>
+                        <button class="shutdown" id="shutdown-pc3" disabled>Shutdown</button>
+                    </div>
+                </div>
+            </div>
+            <div class="switchsection" id="switchsection" style="display: none;">
+                <h2>Switch Management</h2>
+                <div class="switch-control">
+                    <div class="switch-item">
+                        <span class="switch-icon">🔌</span> Main Switch (2960) <span class="switch-status" id="switch-status">OFF</span>
+                        <button class="turn-on" id="turnon-switch">Turn On</button>
+                        <button class="shutdown" id="shutdown-switch" disabled>Shutdown</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <style>
+        .parent {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            grid-template-rows: repeat(8, 1fr);
+            gap: 8px;
+            height: 100vh;
+        }
+
+        .div1 {
+            grid-row: span 8 / span 8;
+            background-color: #f4f4f4;
+            padding: 20px;
+            border-right: 1px solid #ccc;
+        }
+
+        .div2 {
+            grid-column: span 4 / span 4;
+            grid-row: span 8 / span 8;
+            padding: 20px;
+        }
+
+        .sidebar-list {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .sidebar-list li {
+            margin-bottom: 10px;
+        }
+
+        .sidebar-list button {
+            width: 100%;
+            padding: 10px;
+            background-color: #e0e0e0;
+            border: none;
+            cursor: pointer;
+            text-align: left;
+        }
+
+        .sidebar-list button.active {
+            background-color: #007bff;
+            color: white;
+        }
+
+        .setting-section h2 {
+            margin-bottom: 20px;
+        }
+
+        .setting-section label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .setting-section input {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+        }
+
+        .setting-section button {
+            padding: 10px 20px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        .setting-section button:hover {
+            background-color: #218838;
+        }
+
+        .pc-list {
+            margin-top: 20px;
+        }
+
+        .pc-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .pc-icon {
+            margin-right: 15px;
+            font-size: 1.5em;
+        }
+
+        .pc-status {
+            margin-left: auto;
+            margin-right: 20px;
+            font-weight: bold;
+            color: red;
+        }
+
+        .pc-status.on {
+            color: green;
+        }
+
+        .switch-status {
+            margin-left: auto;
+            margin-right: 20px;
+            font-weight: bold;
+            color: red;
+        }
+
+        .switch-status.on {
+            color: green;
+        }
+
+        .turn-on, .shutdown {
+            padding: 8px 12px;
+            margin-left: 10px;
+            border: none;
+            cursor: pointer;
+            border-radius: 3px;
+        }
+
+        .turn-on {
+            background-color: #28a745;
+            color: white;
+        }
+
+        .shutdown {
+            background-color: #dc3545;
+            color: white;
+        }
+
+        .turn-on:disabled {
+            background-color: #6c757d;
+            cursor: not-allowed;
+        }
+
+        .shutdown:disabled {
+            background-color: #6c757d;
+            cursor: not-allowed;
+        }
+    </style>
+    <script>
+        const pcmanBtn = document.getElementById('pcman');
+        const switmanBtn = document.getElementById('switman');
+        const pcsection = document.getElementById('pcsection');
+        const switchsection = document.getElementById('switchsection');
+
+        // Initialize PC statuses from localStorage or default to OFF
+        let pcStatuses = JSON.parse(localStorage.getItem('pcStatuses')) || ['OFF', 'OFF', 'OFF'];
+
+        // Update display based on stored statuses
+        const statusElements = [document.getElementById('status-pc1'), document.getElementById('status-pc2'), document.getElementById('status-pc3')];
+        const turnonButtons = [document.getElementById('turnon-pc1'), document.getElementById('turnon-pc2'), document.getElementById('turnon-pc3')];
+        const shutdownButtons = [document.getElementById('shutdown-pc1'), document.getElementById('shutdown-pc2'), document.getElementById('shutdown-pc3')];
+
+        function updateDisplay(index) {
+            const status = pcStatuses[index];
+            statusElements[index].textContent = status;
+            if (status === 'ON') {
+                statusElements[index].classList.add('on');
+                turnonButtons[index].disabled = true;
+                shutdownButtons[index].disabled = false;
+            } else {
+                statusElements[index].classList.remove('on');
+                turnonButtons[index].disabled = false;
+                shutdownButtons[index].disabled = true;
+            }
+        }
+
+        // Initialize display
+        pcStatuses.forEach((status, index) => updateDisplay(index));
+
+        pcmanBtn.addEventListener('click', () => {
+            pcsection.style.display = 'block';
+            switchsection.style.display = 'none';
+            pcmanBtn.classList.add('active');
+            switmanBtn.classList.remove('active');
+        });
+        switmanBtn.addEventListener('click', () => {
+            pcsection.style.display = 'none';
+            switchsection.style.display = 'block';
+            switmanBtn.classList.add('active');
+            pcmanBtn.classList.remove('active');
+        });
+
+        // PC Management Functionality
+        turnonButtons[0].addEventListener('click', () => {
+            pcStatuses[0] = 'ON';
+            localStorage.setItem('pcStatuses', JSON.stringify(pcStatuses));
+            updateDisplay(0);
+        });
+
+        shutdownButtons[0].addEventListener('click', () => {
+            pcStatuses[0] = 'OFF';
+            localStorage.setItem('pcStatuses', JSON.stringify(pcStatuses));
+            updateDisplay(0);
+        });
+
+        turnonButtons[1].addEventListener('click', () => {
+            pcStatuses[1] = 'ON';
+            localStorage.setItem('pcStatuses', JSON.stringify(pcStatuses));
+            updateDisplay(1);
+        });
+
+        shutdownButtons[1].addEventListener('click', () => {
+            pcStatuses[1] = 'OFF';
+            localStorage.setItem('pcStatuses', JSON.stringify(pcStatuses));
+            updateDisplay(1);
+        });
+
+        turnonButtons[2].addEventListener('click', () => {
+            pcStatuses[2] = 'ON';
+            localStorage.setItem('pcStatuses', JSON.stringify(pcStatuses));
+            updateDisplay(2);
+        });
+
+        shutdownButtons[2].addEventListener('click', () => {
+            pcStatuses[2] = 'OFF';
+            localStorage.setItem('pcStatuses', JSON.stringify(pcStatuses));
+            updateDisplay(2);
+        });
+
+        // Switch Management Functionality
+        const switchStatus = document.getElementById('switch-status');
+        const turnonSwitchBtn = document.getElementById('turnon-switch');
+        const shutdownSwitchBtn = document.getElementById('shutdown-switch');
+
+        // Initialize switch status from localStorage or default to OFF
+        let switchStatusValue = localStorage.getItem('switchStatus') || 'OFF';
+
+        function updateSwitchDisplay() {
+            switchStatus.textContent = switchStatusValue;
+            if (switchStatusValue === 'ON') {
+                switchStatus.classList.add('on');
+                turnonSwitchBtn.disabled = true;
+                shutdownSwitchBtn.disabled = false;
+            } else {
+                switchStatus.classList.remove('on');
+                turnonSwitchBtn.disabled = false;
+                shutdownSwitchBtn.disabled = true;
+            }
+        }
+
+        // Initialize switch display
+        updateSwitchDisplay();
+
+        turnonSwitchBtn.addEventListener('click', () => {
+            switchStatusValue = 'ON';
+            localStorage.setItem('switchStatus', switchStatusValue);
+            updateSwitchDisplay();
+        });
+
+        shutdownSwitchBtn.addEventListener('click', () => {
+            switchStatusValue = 'OFF';
+            localStorage.setItem('switchStatus', switchStatusValue);
+            updateSwitchDisplay();
+        });
+    </script>
+</body>
+</html>
