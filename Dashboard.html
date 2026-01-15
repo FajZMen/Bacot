@@ -141,7 +141,7 @@
         </div>
 
         <div class="header">
-            Project Kelompok 8
+            The Network
         </div>
 
         <div class="content1 card-content">
@@ -152,14 +152,9 @@
 
         <div class="content2 card-content">
             <div class="card-icon">🔌</div>
-            <div class="card-label">Main Switch (2960)</div>
-            
-            <div class="status-badge" id="switch-status-badge">STATUS: OFF</div> 
-            
-            <p style="margin-top: 15px; font-size: 14px;">
-                IP: 192.168.1.1<br>
-                Uptime: 00:00:00
-            </p>
+            <div class="card-value">0</div>
+            <div class="card-label">Switches Running</div>
+            <small style="opacity: 0.8;">VLAN 20 - Network Switches</small>
         </div>
 
     </div>
@@ -168,9 +163,14 @@
         const logBtn = document.getElementById('logout');
 
         // Update PC running count from localStorage
-        const pcStatuses = JSON.parse(localStorage.getItem('pcStatuses')) || ['OFF', 'OFF', 'OFF'];
+        const pcStatuses = JSON.parse(localStorage.getItem('pcStatuses')) || ['OFF', 'OFF', 'OFF', 'OFF', 'OFF', 'OFF', 'OFF'];
         const runningCount = pcStatuses.filter(status => status === 'ON').length;
-        document.querySelector('.card-value').textContent = runningCount;
+        document.querySelector('.content1 .card-value').textContent = runningCount;
+
+        // Update switches running count from localStorage
+        const switchStatuses = JSON.parse(localStorage.getItem('switchStatuses')) || ['OFF', 'OFF', 'OFF', 'OFF', 'OFF'];
+        const switchesRunningCount = switchStatuses.filter(status => status === 'ON').length;
+        document.querySelector('.content2 .card-value').textContent = switchesRunningCount;
 
         managerBtn.addEventListener('click', () => {
             window.location.href = 'Manager.html';
@@ -179,14 +179,7 @@
         logBtn.addEventListener('click', () => {
             window.location.href = 'index.html';
         });
-
-        // Update switch status from localStorage
-        const switchStatusBadge = document.getElementById('switch-status-badge');
-        const switchStatusValue = localStorage.getItem('switchStatus') || 'OFF';
-        switchStatusBadge.textContent = `STATUS: ${switchStatusValue}`;
-        if (switchStatusValue === 'ON') {
-            switchStatusBadge.style.color = 'green';
-        }
     </script>
 </body>
 </html>
+</body>
